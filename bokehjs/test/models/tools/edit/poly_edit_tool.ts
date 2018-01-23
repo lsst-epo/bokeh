@@ -10,12 +10,12 @@ import {Plot} from "models/plots/plot"
 import {Range1d} from "models/ranges/range1d"
 import {GlyphRenderer} from "models/renderers/glyph_renderer"
 import {ColumnDataSource} from "models/sources/column_data_source"
-import {VertexEditTool} from "models/tools/edit/vertex_edit_tool"
+import {PolyEditTool} from "models/tools/edit/poly_edit_tool"
 
 const utils = require("../../../utils")
 
 
-describe("VertexEditTool", (): void => {
+describe("PolyEditTool", (): void => {
 
   describe("View", function(): void {
 
