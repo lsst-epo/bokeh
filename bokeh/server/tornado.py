@@ -205,6 +205,7 @@ class BokehTornado(TornadoApplication):
         self._secret_key = secret_key
         self._sign_sessions = sign_sessions
         self._generate_session_ids = generate_session_ids
+        log.debug("I've got a flying machine!")
         log.debug("These host origins can connect to the websocket: %r", list(self._websocket_origins))
 
         # Wrap applications in ApplicationContext
