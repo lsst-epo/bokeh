@@ -454,6 +454,15 @@ def show_app(app, state, notebook_url, port=0):
 
     loop = IOLoop.current()
 
+
+    def jupyter_public_address(notebook_url, port):
+        import os
+        public_url = '%s/%s/proxy/%d/' % (os.environ['EXTERNAL_URL'], os.environ['JUPYTERHUB_SERVICE_PREFIX'], port)
+        return public_url
+
+    get_server_url = _server_url
+    get_server_url = jupyter_public_address
+
     origin = _origin_url(notebook_url)
     server = Server({"/": app}, io_loop=loop, port=port,  allow_websocket_origin=[origin])
 
@@ -461,10 +470,13 @@ def show_app(app, state, notebook_url, port=0):
     curstate().uuid_to_server[server_id] = server
 
     server.start()
-    url = _server_url(notebook_url, server.port)
+    url = get_server_url(notebook_url, server.port)
+
+    logging.debug("Server URL is %s" % url)
+    logging.debug("Origin URL is %s" % origin)
 
     from ..embed import server_document
-    script = server_document(url)
+    script = server_document(url, resources=None)
 
     publish_display_data({
         HTML_MIME_TYPE: script,
