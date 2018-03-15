@@ -457,7 +457,9 @@ def show_app(app, state, notebook_url, port=0):
 
     def jupyter_public_address(notebook_url, port):
         import os
-        public_url = '%s/%s/proxy/%d/' % (os.environ['EXTERNAL_URL'], os.environ['JUPYTERHUB_SERVICE_PREFIX'], port)
+        import urllib
+        user_url = urllib.parse.urljoin(os.environ['EXTERNAL_URL'], os.environ['JUPYTERHUB_SERVICE_PREFIX'])
+        public_url = urllib.parse.urljoin(user_url, 'proxy/%d' % port)
         return public_url
 
     get_server_url = _server_url
